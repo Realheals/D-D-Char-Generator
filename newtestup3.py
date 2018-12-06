@@ -6,10 +6,14 @@ class DNDClass:
         self.background = ''
         self.statl = []
         self.skilllist=[]
+        self.hp=0
+        self.ac=0
+        self.inti=0
         self.specialhealthmod=0
+        self.mods=[]
 
     def introd(self):
-        return("%s, Lvl 1 %s %s %s" %(self.name, self.race, self.chacla, self.background))
+        return("%s, Lvl 1 %s %s %s \nHP=%s AC=%s Intitative=%s" %(self.name, self.race, self.chacla, self.background, self.hp, self.ac, self.inti))
             
     def addremoveit(self, x, l, nl):
         nl[x]=max(l)
@@ -94,6 +98,17 @@ class DNDClass:
             attrlis.append(sum(numlis))
         self.statl=attrlis
 
+    def classdice(self):
+        if self.chacla=='Wizard' or self.chacla=='Sorcerer':
+            self.hitdie=6
+        elif self.chacla=='Bard' or self.chacla=='Cleric' or self.chacla=='Druid' or self.chacla=='Monk' or self.chacla=='Rogue' or self.chacla=='Warlock':
+            self.hitdie=8
+        elif self.chacla=='Fighter' or self.chacla=='Paladin' or self.chacla=='Ranger':
+            self.hitdie=10
+        elif self.chacla=='Barbarian':
+            self.hitdie=12
+    
+
 
     def randoBG(self):
         choicelist=['Outlander','Sage', 'Acolyte', 'Charlatan', 'Criminal', 'Entertainer', 'Folk Hero', 'Guild Artisan', 'Hermit', 'Noble', 'Sailor', 'Soldier', 'Urchin']
@@ -141,17 +156,19 @@ class DNDClass:
     def randoSkill(self):
         RogueValidSkill=['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Persuasion', 'Sleight of Hand', 'Stealth']
         FighterValidSkill=['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival']
-        BarbarianValidSkill=[]
+        BarbValidSkill=['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival']
+        BardValidSKill=[]
+        
         self.mathrandoSkill(4, FighterValidSkill)
 
     def mathrandoSkill(self, amount, skillzee):
         t=[]
-        print(self.skilllist[0])
+        #print(self.skilllist[0])
         if self.skilllist[0] in skillzee:
-            print("t")
+            #print("t")
             t.append(skillzee.index(self.skilllist[0]))
         if self.skilllist[1] in skillzee:
-            print("t")
+            #print("t")
             t.append(skillzee.index(self.skilllist[1]))
         x = 0
         while x !=amount:
@@ -166,14 +183,45 @@ class DNDClass:
         #classList=['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard']
         classList=['Rogue', 'Fighter']
         x= random.randrange(0,2)
-        print(x)
+        #print(x)
         self.chacla=classList[x]
 
     def pickRace(self):
         raceList=['Human', 'Tiefling', 'Hill Dwarf']
         x= random.randrange(0,3)
-        print(x)
+        #print(x)
         self.race=raceList[x]
+
+    def healthACinti(self):
+        self.hp=self.hitdie+self.mods[3]+self.specialhealthmod
+        self.inti=self.mods[1]
+
+    def getMod(self):
+        for x in range(0, 6):
+            if self.statl[x]==1:
+                self.mods.append(-5)
+            elif self.statl[x]==2 or self.statl[x]==3:
+                self.mods.append(-4)
+            elif self.statl[x]==4 or self.statl[x]==5:
+                self.mods.append(-3)
+            elif self.statl[x]==6 or self.statl[x]==7:
+                self.mods.append(-2)
+            elif self.statl[x]==8 or self.statl[x]==9:
+                self.mods.append(-1)
+            elif self.statl[x]==10 or self.statl[x]==11:
+                self.mods.append(0)
+            elif self.statl[x]==12 or self.statl[x]==13:
+                self.mods.append(1)
+            elif self.statl[x]==14 or self.statl[x]==15:
+                self.mods.append(2)
+            elif self.statl[x]==16 or self.statl[x]==17:
+                self.mods.append(3)
+            elif self.statl[x]==18 or self.statl[x]==19:
+                self.mods.append(4)
+            elif self.statl[x]==18 or self.statl[x]==19:
+                self.mods.append(4)
+            elif self.statl[x]==20:
+                self.mods.append(5)
 
 c3 = DNDClass('Zeph')
 c4 = DNDClass('Nowi')
@@ -181,12 +229,15 @@ c3.randoBG()
 c4.randoBG()
 c3.pickClass()
 c4.pickClass()
+c4.classdice()
 c3.pickRace()
 c4.pickRace()
-print(c4.introd())
 c4.getstats()
 print(c4.statl)
 c4.calcstat2()
-print(c4.printstat(c4.statl))
+c4.getMod()
 c4.randoSkill()
+c4.healthACinti()
+print(c4.introd())
+print(c4.printstat(c4.statl))
 print("Skilllist: " + ", ".join(c4.skilllist))
