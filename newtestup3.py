@@ -32,8 +32,47 @@ class DNDClass:
             stl[2]=stl[2]+1
             stl[3]=stl[3]+2
             self.specialhealthmod=+1 #REMEMBER TO ADD THIS TO HP SCORE
-        #elif self.race == '
-
+        elif self.race == 'Mountain Dwarf':#+2 Con +2 Str
+            stl[0]=stl[0]+2
+            stl[3]=stl[3]+2
+        elif self.race== 'High Elf':#+2 Dex +1 Int
+            stl[4]=stl[4]+1
+            stl[1]=stl[1]+2
+        elif self.race== 'Wood Elf':#+2 Dex +1 Wis
+            stl[2]=stl[2]+1
+            stl[1]=stl[1]+2
+        elif self.race== 'Drow Elf':#+2 Dex +1 Cha
+            stl[5]=stl[5]+1
+            stl[1]=stl[1]+2
+        elif self.race== 'Lightfoot Halfling':#+2 Dex +1 Cha
+            stl[5]=stl[5]+1
+            stl[1]=stl[1]+2
+        elif self.race== 'Stout Halfling':#+2 Dex +1 Con
+            stl[3]=stl[3]+1
+            stl[1]=stl[1]+2
+        elif self.race== 'Dragonborn':#+2 Str +1 Cha
+            stl[5]=stl[5]+1
+            stl[0]=stl[0]+2
+        elif self.race== 'Forest Gnome':#+2 Int +1 Dex
+            stl[1]=stl[1]+1
+            stl[4]=stl[4]+2
+        elif self.race== 'Rock Gnome':#+2 Int +1 Con
+            stl[3]=stl[3]+1
+            stl[4]=stl[4]+2
+        elif self.race== 'Half Elf':#+2 Cha +1? + 1?
+            stl[5]=stl[5]+2
+            untildis=0
+            nono=0
+            while untildis != 2:
+                pee=random.randrange(1,4)
+                if pee !=nono:
+                    stl[pee]=stl[pee]+1
+                    print(pee)
+                    nono=pee
+                    untildis=untildis+1
+        elif self.race=='Half Orc':#+2 Str +1 Con
+            stl[3]=stl[3]+1
+            stl[0]=stl[0]+2
     def addremovepart2(self, st1, st2, st3, st4, st5, st6):
         stat2=self.statl
         newstat=[0,0,0,0,0,0]
@@ -67,26 +106,6 @@ class DNDClass:
     def printstat(self, l):
         return("Str = %s\nDex = %s\nWis = %s\nCon = %s\nInt = %s\nCha = %s" %(l[0], l[1], l[2], l[3], l[4], l[5]))
 
-    def backgcalc(self, c, Skillz): #OLD CODE DISCONTINUED
-        y = c
-        print("Choose " + str(c) +" from "+ str(Skillz))
-        while y > 0:
-            skill=input("Pick 1(%s remaining)" %str(y))
-            if skill in Skillz and skill not in self.skilllist:
-                self.skilllist.append(skill)
-                y=y-1
-            else:
-                print("Invalid Choice, Repick")
-
-    def backg(self): #OLD CODE DISCONTINUED
-        RogueValidSkill=['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Persuasion', 'Sleight of Hand', 'Stealth']
-        FighterValidSkill=['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival']
-        BarbarianValidSkill=[] #Also do the rest of the classes + background skills
-        if self.chacla=='Rogue':
-            self.backgcalc(4, RogueValidSkill)
-        elif self.chacla=='Fighter':
-            self.backgcalc(2, FighterValidSkill)
-        return(self.skilllist)
 
     def getstats(self):
         attrlis=[]
@@ -154,12 +173,42 @@ class DNDClass:
             self.skilllist.append('Sleight of Hand')
             self.skilllist.append('Stealth')
     def randoSkill(self):
-        RogueValidSkill=['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Persuasion', 'Sleight of Hand', 'Stealth']
-        FighterValidSkill=['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival']
-        BarbValidSkill=['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival']
-        BardValidSKill=[]
-        
-        self.mathrandoSkill(4, FighterValidSkill)
+        RogueValidSkill=['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Persuasion', 'Sleight of Hand', 'Stealth'] #4
+        FighterValidSkill=['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'] #2
+        BarbValidSkill=['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival'] #2
+        BardValidSkill=['Acrobatics', 'Animal Handling','Arcana','Athletics','Deception','History','Insight','Intimidation','Investigation', 'Medicine', 'Nature','Perception','Performance','Persuasion','Religion','Sleight of Hand', 'Stealth', 'Survival'] #3
+        ClericValidSkill=['History','Insight','Medicine','Persuasion','Religion'] #2
+        DruidValidSkill=['Arcana','Animal Handling','Insight','Medicine','Nature','Perception','Religion','Survival']#2
+        MonkValidSkill=['Acrobatics', 'Athletics','History','Insight','Religion','Stealth']#2
+        PallyValidSkill=['Athletics','Insight','Intimidation','Medicine','Persuasion','Religion']#2
+        RangerValidSkill=['Animal Handling','Athletics','Insight','Investigation','Nature','Perception','Stealth','Survival']#3
+        SorcValidSkill=['Arcana','Deception','Insight','Intimidation','Persuasion','Religion']#2
+        LockValidSkill=['Arcana','Deception','History','Intimidation','Investigation','Nature','Religion']#2
+        WizValidSkill=['Arcana','History','Insight','Intimidation','Investigation','Medicine','Religion']#2
+        if self.chacla=='Rogue':
+            self.mathrandoSkill(4, RogueValidSkill)
+        elif self.chacla=='Fighter':
+            self.mathrandoSkill(2, FighterValidSkill)
+        elif self.chacla=='Barbarian':
+            self.mathrandoSkill(2, BarbValidSkill)
+        elif self.chacla=='Bard':
+            self.mathrandoSkill(3, BardValidSkill)
+        elif self.chacla=='Cleric':
+            self.mathrandoSkill(2, ClericValidSkill)
+        elif self.chacla=='Druid':
+            self.mathrandoSkill(2, DruidValidSkill)
+        elif self.chacla=='Monk':
+            self.mathrandoSkill(2, MonkValidSkill)
+        elif self.chacla=='Paladin':
+            self.mathrandoSkill(2, PallyValidSkill)
+        elif self.chacla=='Ranger':
+            self.mathrandoSkill(3, RangerValidSkill)
+        elif self.chacla=='Sorcerer':
+            self.mathrandoSkill(2, SorcValidSkill)
+        elif self.chacla=='Warlock':
+            self.mathrandoSkill(2, LockValidSkill)
+        elif self.chacla=='Wizard':
+            self.mathrandoSkill(2, WizValidSkill)
 
     def mathrandoSkill(self, amount, skillzee):
         t=[]
@@ -180,15 +229,15 @@ class DNDClass:
                 
             
     def pickClass(self):
-        #classList=['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard']
-        classList=['Rogue', 'Fighter']
-        x= random.randrange(0,2)
+        classList=['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard']
+        #classList=['Rogue', 'Fighter']
+        x= random.randrange(0,12)
         #print(x)
         self.chacla=classList[x]
 
     def pickRace(self):
-        raceList=['Human', 'Tiefling', 'Hill Dwarf']
-        x= random.randrange(0,3)
+        raceList=['Human', 'Tiefling', 'Hill Dwarf', 'Half Elf', 'Half Orc', 'Mountain Dwarf', 'High Elf', 'Wood Elf', 'Drow Elf', 'Lightfoot Halfling', 'Stout Halfling', 'Dragonborn', 'Forest Gnome','Rock Gnome']
+        x= random.randrange(0,14)
         #print(x)
         self.race=raceList[x]
 
